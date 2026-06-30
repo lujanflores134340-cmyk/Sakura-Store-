@@ -200,7 +200,7 @@ img{max-width:100%}
         <sc-for list="{{ featured }}" as="p" hint-placeholder-count="8">
           <div onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 18px 40px -32px rgba(244,143,177,.7);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);box-shadow:0 34px 56px -30px rgba(244,143,177,1);border-color:rgba(244,143,177,.45)">
             <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px">
-              <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+              <img src="{{ p.img }}" data-fallback="{{ p.imgFallback }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
               <sc-if value="{{ p.badge }}"><div style="position:absolute;top:11px;left:11px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px">{{ p.badge }}</div></sc-if>
               <sc-if value="{{ p.discount }}"><div style="position:absolute;top:11px;right:11px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px">-{{ p.discount }}%</div></sc-if>
               <button onClick="{{ p.onFav }}" title="Favorito" style="position:absolute;bottom:11px;right:11px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:var(--pink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,0,0,.3);transition:transform .2s" style-hover="transform:scale(1.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.2 12.7a4.7 4.7 0 0 1 6.6-6.7l1.2 1.1 1.2-1.1a4.7 4.7 0 0 1 6.6 6.7Z"></path></svg></button>
@@ -280,7 +280,7 @@ img{max-width:100%}
       <div style="display:flex;gap:18px;width:max-content;padding:0 clamp(20px,5vw,48px);animation:marquee 42s linear infinite" style-hover="animation-play-state:paused">
         <sc-for list="{{ novedadesLoop }}" as="p" hint-placeholder-count="10">
           <div onClick="{{ p.onOpen }}" style="flex-shrink:0;width:230px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:13px;cursor:pointer;box-shadow:0 16px 38px -30px rgba(244,143,177,.7);transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-7px);box-shadow:0 30px 50px -28px rgba(244,143,177,1)">
-            <div style="position:relative;border-radius:15px;overflow:hidden;aspect-ratio:1/1;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:11px"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/><sc-if value="{{ p.badge }}"><div style="position:absolute;top:9px;left:9px;background:var(--pink);color:#fff;font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px">{{ p.badge }}</div></sc-if></div>
+            <div style="position:relative;border-radius:15px;overflow:hidden;aspect-ratio:1/1;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:11px"><img src="{{ p.img }}" data-fallback="{{ p.imgFallback }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/><sc-if value="{{ p.badge }}"><div style="position:absolute;top:9px;left:9px;background:var(--pink);color:#fff;font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px">{{ p.badge }}</div></sc-if></div>
             <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--pink)">{{ p.series }}</div>
             <div style="font-weight:700;font-size:14px;line-height:1.25;margin:2px 0 6px;min-height:34px">{{ p.name }}</div>
             <strong style="font-size:16px">{{ p.priceF }}</strong>
@@ -365,7 +365,7 @@ img{max-width:100%}
         <sc-for list="{{ catProducts }}" as="p" hint-placeholder-count="8">
           <div onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 18px 40px -32px rgba(244,143,177,.7);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);box-shadow:0 34px 56px -30px rgba(244,143,177,1);border-color:rgba(244,143,177,.45)">
             <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px">
-              <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+              <img src="{{ p.img }}" data-fallback="{{ p.imgFallback }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
               <sc-if value="{{ p.badge }}"><div style="position:absolute;top:11px;left:11px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px">{{ p.badge }}</div></sc-if>
               <sc-if value="{{ p.discount }}"><div style="position:absolute;top:11px;right:11px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px">-{{ p.discount }}%</div></sc-if>
               <button onClick="{{ p.onFav }}" title="Favorito" style="position:absolute;bottom:11px;right:11px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:var(--pink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,0,0,.3);transition:transform .2s" style-hover="transform:scale(1.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.2 12.7a4.7 4.7 0 0 1 6.6-6.7l1.2 1.1 1.2-1.1a4.7 4.7 0 0 1 6.6 6.7Z"></path></svg></button>
@@ -391,12 +391,12 @@ img{max-width:100%}
     <div style="display:grid;gap:clamp(26px,4vw,56px);grid-template-columns:{{ pdGrid }};align-items:start">
       <div>
         <div style="border-radius:26px;overflow:hidden;aspect-ratio:4/5;background:var(--gray);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 40px 80px -50px rgba(244,143,177,1);border:1px solid var(--line)">
-          <img src="{{ mainImg }}" alt="{{ product.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img src="{{ mainImg }}" data-fallback="{{ mainImgFallback }}" alt="{{ product.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
           <sc-if value="{{ product.badge }}"><div style="position:absolute;top:16px;left:16px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px">{{ product.badge }}</div></sc-if>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:13px">
           <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="4">
-            <div onClick="{{ g.onClick }}" style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--gray);cursor:pointer;border:2px solid {{ g.ring }};transition:border-color .2s"><img src="{{ g.thumb }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"/></div>
+            <div onClick="{{ g.onClick }}" style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--gray);cursor:pointer;border:2px solid {{ g.ring }};transition:border-color .2s"><img src="{{ g.thumb }}" data-fallback="{{ g.fallback }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"/></div>
           </sc-for>
         </div>
       </div>
@@ -436,7 +436,7 @@ img{max-width:100%}
       <div style="display:grid;gap:clamp(14px,1.6vw,24px);grid-template-columns:repeat(auto-fill,minmax(clamp(190px,20vw,240px),1fr))">
         <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
           <div onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 18px 40px -32px rgba(244,143,177,.7);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);box-shadow:0 34px 56px -30px rgba(244,143,177,1);border-color:rgba(244,143,177,.45)">
-            <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/></div>
+            <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px"><img src="{{ p.img }}" data-fallback="{{ p.imgFallback }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/></div>
             <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--pink)">{{ p.series }}</div>
             <div style="font-weight:700;font-size:15px;line-height:1.25;margin:3px 0 6px;min-height:36px">{{ p.name }}</div>
             <strong style="font-size:17px;margin-top:auto">{{ p.priceF }}</strong>
@@ -467,7 +467,7 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._rz);
     this._sc = () => { const y = window.scrollY||0; if(this._root){ this._root.querySelectorAll('[data-parallax]').forEach(el=>{ const s=parseFloat(el.getAttribute('data-speed')||'.1'); el.style.transform='translate3d(0,'+(y*s).toFixed(1)+'px,0)'; }); } };
     window.addEventListener('scroll', this._sc, { passive:true });
-    if (this._root) this._root.addEventListener('error', (e)=>{ if(e.target && e.target.tagName==='IMG'){ e.target.style.opacity='0'; } }, true);
+    if (this._root) this._root.addEventListener('error', (e)=>{ if(e.target && e.target.tagName==='IMG'){ const t=e.target; if(t.dataset.fallback && t.src!==t.dataset.fallback){ t.src=t.dataset.fallback; } else { t.style.opacity='0'; } } }, true);
     this.reveal();
   }
   componentDidUpdate(prev){
@@ -509,18 +509,18 @@ class Component extends DCLogic {
 
   data(){
     return [
-      {id:1,name:'Monkey D. Luffy · Gear 5',series:'One Piece',price:485000,old:560000,stock:6,rating:4.9,badge:'Preventa',hue:345},
-      {id:2,name:'Roronoa Zoro · King of Hell',series:'One Piece',price:420000,stock:12,rating:4.8,hue:150},
-      {id:3,name:'Naruto Uzumaki · Sage Mode',series:'Naruto',price:365000,old:410000,stock:4,rating:4.7,badge:'Oferta',hue:30},
-      {id:4,name:'Son Goku · Ultra Instinct',series:'Dragon Ball',price:540000,stock:9,rating:5.0,badge:'Nuevo',hue:205},
-      {id:5,name:'Tanjiro Kamado · Hinokami',series:'Demon Slayer',price:398000,old:450000,stock:7,rating:4.9,hue:150},
-      {id:6,name:'Gojo Satoru · Infinity',series:'Jujutsu Kaisen',price:610000,stock:3,rating:5.0,badge:'Preventa',hue:270},
-      {id:7,name:'Nezuko Kamado · Demon Form',series:'Demon Slayer',price:372000,stock:15,rating:4.8,badge:'Nuevo',hue:345},
-      {id:8,name:'Denji · Chainsaw Devil',series:'Chainsaw Man',price:355000,old:399000,stock:8,rating:4.6,hue:18},
-      {id:9,name:'Levi Ackerman · Survey Corps',series:'Attack on Titan',price:430000,stock:5,rating:4.9,hue:95},
-      {id:10,name:'Pikachu · Nendoroid',series:'Pokémon',price:215000,stock:20,rating:4.7,badge:'Nuevo',hue:50},
-      {id:11,name:'Ichigo Kurosaki · Bankai',series:'Bleach',price:388000,old:440000,stock:6,rating:4.8,hue:205},
-      {id:12,name:'Vegeta · Royal Blue',series:'Dragon Ball',price:505000,stock:4,rating:4.9,badge:'Preventa',hue:225}
+      {id:1,name:'Monkey D. Luffy · Gear 5',series:'One Piece',price:485000,old:560000,stock:6,rating:4.9,badge:'Preventa',hue:345,char:'https://cdn.myanimelist.net/images/characters/9/310307.jpg'},
+      {id:2,name:'Roronoa Zoro · King of Hell',series:'One Piece',price:420000,stock:12,rating:4.8,hue:150,char:'https://cdn.myanimelist.net/images/characters/3/100534.jpg'},
+      {id:3,name:'Naruto Uzumaki · Sage Mode',series:'Naruto',price:365000,old:410000,stock:4,rating:4.7,badge:'Oferta',hue:30,char:'https://cdn.myanimelist.net/images/characters/17/284129.jpg'},
+      {id:4,name:'Son Goku · Ultra Instinct',series:'Dragon Ball',price:540000,stock:9,rating:5.0,badge:'Nuevo',hue:205,char:'https://cdn.myanimelist.net/images/characters/15/72353.jpg'},
+      {id:5,name:'Tanjiro Kamado · Hinokami',series:'Demon Slayer',price:398000,old:450000,stock:7,rating:4.9,hue:150,char:'https://cdn.myanimelist.net/images/characters/6/386879.jpg'},
+      {id:6,name:'Gojo Satoru · Infinity',series:'Jujutsu Kaisen',price:610000,stock:3,rating:5.0,badge:'Preventa',hue:270,char:'https://cdn.myanimelist.net/images/characters/7/422168.jpg'},
+      {id:7,name:'Nezuko Kamado · Demon Form',series:'Demon Slayer',price:372000,stock:15,rating:4.8,badge:'Nuevo',hue:345,char:'https://cdn.myanimelist.net/images/characters/2/378254.jpg'},
+      {id:8,name:'Denji · Chainsaw Devil',series:'Chainsaw Man',price:355000,old:399000,stock:8,rating:4.6,hue:18,char:'https://cdn.myanimelist.net/images/characters/3/430399.jpg'},
+      {id:9,name:'Levi Ackerman · Survey Corps',series:'Attack on Titan',price:430000,stock:5,rating:4.9,hue:95,char:'https://cdn.myanimelist.net/images/characters/2/241413.jpg'},
+      {id:10,name:'Pikachu · Nendoroid',series:'Pokémon',price:215000,stock:20,rating:4.7,badge:'Nuevo',hue:50,char:'https://cdn.myanimelist.net/images/characters/4/146779.jpg'},
+      {id:11,name:'Ichigo Kurosaki · Bankai',series:'Bleach',price:388000,old:440000,stock:6,rating:4.8,hue:205,char:'https://cdn.myanimelist.net/images/characters/3/72533.jpg'},
+      {id:12,name:'Vegeta · Royal Blue',series:'Dragon Ball',price:505000,stock:4,rating:4.9,badge:'Preventa',hue:225,char:'https://cdn.myanimelist.net/images/characters/9/49575.jpg'}
     ];
   }
 
@@ -533,8 +533,9 @@ class Component extends DCLogic {
       discount: p.old ? Math.round((1 - p.price/p.old)*100) : null,
       ratingStr: p.rating.toFixed(1),
       bg: this.bg(p.hue),
-      img: this.jp(this.tagFor(p.series), p.id*61+7, 700, 850),
-      imgL: this.jp(this.tagFor(p.series), p.id*61+7, 900, 1100),
+      img: p.char || this.jp(this.tagFor(p.series), p.id*61+7, 700, 850),
+      imgL: p.char || this.jp(this.tagFor(p.series), p.id*61+7, 900, 1100),
+      imgFallback: this.jp(this.tagFor(p.series), p.id*61+7, 900, 1100),
       cap: 'FIGURA · ' + p.series.toUpperCase(),
       heartFill: faved ? 'var(--pink)' : 'none',
       stockMini: low ? 'Últimas '+p.stock : 'En stock',
@@ -620,8 +621,12 @@ class Component extends DCLogic {
     const gbase = prod.id*61+7;
     const gseeds = [gbase, gbase+500, gbase+900, gbase+1300];
     const prodTag = this.tagFor(prod.series);
-    const gallery = gseeds.map((sd,i)=>({ img:this.jp(prodTag,sd,900,1100), thumb:this.jp(prodTag,sd,300,300), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) }));
+    const gallery = gseeds.map((sd,i)=>{
+      const useChar = i===0 && prod.char;
+      return { img: useChar ? prod.char : this.jp(prodTag,sd,900,1100), thumb: useChar ? prod.char : this.jp(prodTag,sd,300,300), fallback:this.jp(prodTag,sd,900,1100), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) };
+    });
     const mainImg = gallery[this.state.gallery] ? gallery[this.state.gallery].img : prod.imgL;
+    const mainImgFallback = gallery[this.state.gallery] ? gallery[this.state.gallery].fallback : prod.imgFallback;
     const related = products.filter(p => p.id !== prod.id).slice(0,4);
     const specs = [['Escala','1/7'],['Altura','24 cm'],['Material','PVC / ABS'],['Fabricante','Good Smile Co.'],['Lanzamiento','Q3 2026'],['Autenticidad','Original ✓']].map(([k,v])=>({k,v}));
 
@@ -643,7 +648,7 @@ class Component extends DCLogic {
       onSort: (e)=>this.setState({sort:e.target.value}),
       catGrid: m ? '1fr' : 'minmax(220px,260px) 1fr',
       // product
-      product: prod, gallery, mainImg, related, specs, qty: this.state.qty,
+      product: prod, gallery, mainImg, mainImgFallback, related, specs, qty: this.state.qty,
       heroImg: this.jp('tokyo,neon,night', 373, 900, 1100),
       heroBg: this.jp('tokyo,night,neon', 7, 1600, 1000),
       bannerImg: this.jp('sakura,japan,temple', 5, 1400, 900),
