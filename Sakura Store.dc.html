@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Klee+One:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{--pink:#F48FB1;--pink-soft:#FCE4EC;--pink-pale:#FFF5F8;--lila:#C9B6E8;--lila-soft:#EDE5F7;--ink:#1E1E1E;--gray:#F5F5F5;--line:rgba(30,30,30,.07)}
+body{margin:0;background:var(--pink-pale);color:var(--ink);font-family:'Zen Kaku Gothic New',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:var(--pink);color:#fff}
+input::placeholder{color:rgba(30,30,30,.42)}
+@keyframes fall{0%{transform:translateY(-12vh) translateX(0) rotate(45deg);opacity:0}10%{opacity:.95}90%{opacity:.5}100%{transform:translateY(112vh) translateX(60px) rotate(420deg);opacity:0}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pop{0%{transform:translate(-50%,16px) scale(.92);opacity:0}100%{transform:translate(-50%,0) scale(1);opacity:1}}
+@keyframes glow{0%,100%{opacity:.55}50%{opacity:.9}}
+@keyframes shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+@keyframes revealIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="font-family:'Zen Kaku Gothic New',sans-serif;color:var(--ink);background:var(--pink-pale);min-height:100vh;overflow-x:clip;position:relative">
+
+<div style="background:var(--ink);color:#fff;text-align:center;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;padding:9px 16px">✿&nbsp; ENVÍO GRATIS DESDE ₲ 500.000 · PRODUCTOS 100% ORIGINALES · PREVENTAS ABIERTAS &nbsp;✿</div>
+
+<header style="position:sticky;top:0;z-index:60;background:rgba(255,255,255,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)">
+  <div style="display:flex;align-items:center;gap:clamp(12px,2.4vw,26px);padding:12px clamp(16px,5vw,48px);max-width:1340px;margin:0 auto">
+    <div onClick="{{ goHome }}" style="cursor:pointer;display:flex;align-items:center;flex-shrink:0">
+      <img src="assets/sakura-logo.png" alt="Sakura Store" style="height:54px;width:auto;display:block"/>
+    </div>
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;max-width:540px;display:flex;align-items:center;gap:10px;background:var(--gray);border:1px solid var(--line);border-radius:999px;padding:11px 18px;transition:border-color .2s,box-shadow .2s" style-hover="border-color:var(--pink);box-shadow:0 8px 24px -16px rgba(244,143,177,.9)">
+      <span style="color:var(--pink);display:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg></span>
+      <input type="text" placeholder="Buscar figuras, series, marcas…" style="border:none;background:transparent;outline:none;flex:1;font:inherit;font-size:15px;color:var(--ink)"/>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(30,30,30,.35);border:1px solid var(--line);border-radius:7px;padding:2px 7px">⌘K</span>
+    </div>
+    </sc-if>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <button title="Favoritos" style="width:44px;height:44px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .2s" style-hover="background:var(--pink-soft);color:var(--pink);border-color:rgba(244,143,177,.5);transform:translateY(-2px)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.2 12.7a4.7 4.7 0 0 1 6.6-6.7l1.2 1.1 1.2-1.1a4.7 4.7 0 0 1 6.6 6.7Z"></path></svg></button>
+      <button title="Carrito" style="position:relative;width:44px;height:44px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .2s" style-hover="background:var(--pink-soft);color:var(--pink);border-color:rgba(244,143,177,.5);transform:translateY(-2px)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5L6 7Z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg><span style="position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;background:var(--pink);color:#fff;border-radius:999px;font-size:11px;font-weight:700;display:grid;place-items:center;border:2px solid #fff">{{ cartCount }}</span></button>
+      <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <button title="Perfil" style="width:44px;height:44px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .2s" style-hover="background:var(--pink-soft);color:var(--pink);border-color:rgba(244,143,177,.5);transform:translateY(-2px)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"></circle><path d="M5.5 20a6.5 6.5 0 0 1 13 0"></path></svg></button>
+      </sc-if>
+      <sc-if value="{{ mobile }}">
+      <button onClick="{{ toggleMenu }}" title="Menú" style="width:44px;height:44px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);background:var(--ink);color:#fff;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="6.5" x2="21" y2="6.5"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="17.5" x2="21" y2="17.5"></line></svg></button>
+      </sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+  <nav style="display:flex;justify-content:center;gap:clamp(14px,2vw,32px);padding:0 clamp(16px,5vw,48px) 12px;flex-wrap:wrap">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
+      <button onClick="{{ item.onClick }}" style="background:none;border:none;font:inherit;font-size:15px;font-weight:500;color:var(--ink);cursor:pointer;padding:5px 2px;transition:color .2s,transform .2s" style-hover="color:var(--pink);transform:translateY(-1px)">{{ item.label }}</button>
+    </sc-for>
+  </nav>
+  </sc-if>
+  <sc-if value="{{ mobile }}">
+  <div style="padding:0 clamp(16px,5vw,48px) 12px">
+    <div style="display:flex;align-items:center;gap:10px;background:var(--gray);border:1px solid var(--line);border-radius:999px;padding:11px 16px">
+      <span style="color:var(--pink);display:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg></span>
+      <input type="text" placeholder="Buscar figuras, series…" style="border:none;background:transparent;outline:none;flex:1;font:inherit;font-size:15px;color:var(--ink)"/>
+    </div>
+  </div>
+  </sc-if>
+</header>
+
+<sc-if value="{{ menuOpen }}">
+<div onClick="{{ closeMenu }}" style="position:fixed;inset:0;background:rgba(30,30,30,.4);backdrop-filter:blur(2px);z-index:79"></div>
+</sc-if>
+<div style="position:fixed;top:0;right:0;height:100dvh;width:min(82vw,330px);background:#fff;z-index:80;box-shadow:-30px 0 60px -30px rgba(30,30,30,.45);transition:transform .4s cubic-bezier(.2,.8,.2,1);transform:{{ drawerTransform }};padding:22px;display:flex;flex-direction:column;gap:6px;overflow-y:auto">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <span style="font-family:'Klee One',cursive;font-weight:600;font-size:22px;color:var(--ink)">Sakura<span style="color:var(--pink)"> Store</span></span>
+    <button onClick="{{ closeMenu }}" style="width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--gray);font-size:18px;cursor:pointer;line-height:1">✕</button>
+  </div>
+  <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
+    <button onClick="{{ item.onClick }}" style="text-align:left;background:none;border:none;border-bottom:1px solid var(--line);font:inherit;font-size:17px;font-weight:500;color:var(--ink);cursor:pointer;padding:14px 4px">{{ item.label }}</button>
+  </sc-for>
+  <div style="display:flex;gap:10px;margin-top:18px">
+    <button style="flex:1;border:1px solid var(--line);background:var(--gray);border-radius:12px;padding:12px;font:inherit;font-weight:600;cursor:pointer">Favoritos</button>
+    <button style="flex:1;border:1px solid var(--line);background:var(--gray);border-radius:12px;padding:12px;font:inherit;font-weight:600;cursor:pointer">Perfil</button>
+  </div>
+</div>
+
+<!-- ===================== HOME ===================== -->
+<sc-if value="{{ screenHome }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;background:linear-gradient(180deg,var(--pink-pale) 0%,var(--pink-soft) 46%,var(--lila-soft) 100%)">
+    <img src="{{ heroBg }}" alt="" loading="lazy" data-parallax data-speed=".03" style="position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;opacity:.13"/>
+    <div data-parallax data-speed=".05" style="position:absolute;inset:-8%;background:radial-gradient(circle at 14% 26%,rgba(244,143,177,.4),transparent 10%),radial-gradient(circle at 82% 18%,rgba(201,182,232,.5),transparent 9%),radial-gradient(circle at 68% 60%,rgba(248,187,208,.45),transparent 8%),radial-gradient(circle at 30% 78%,rgba(201,182,232,.4),transparent 9%),radial-gradient(circle at 92% 70%,rgba(244,143,177,.35),transparent 7%);filter:blur(1px)"></div>
+    <div data-parallax data-speed=".12" style="position:absolute;right:7%;bottom:0;color:rgba(110,59,78,.13);width:clamp(220px,26vw,380px);height:clamp(280px,33vw,450px)">
+      <div style="position:absolute;top:2%;left:-8%;width:116%;height:6.5%;border-radius:6px;background:currentColor"></div>
+      <div style="position:absolute;top:15%;left:0;width:100%;height:4.5%;background:currentColor"></div>
+      <div style="position:absolute;top:9%;left:15%;width:9%;height:91%;background:currentColor"></div>
+      <div style="position:absolute;top:9%;right:15%;width:9%;height:91%;background:currentColor"></div>
+    </div>
+    <div data-parallax data-speed=".18" style="position:absolute;left:11%;top:16%;animation:floaty 6s ease-in-out infinite">
+      <div style="width:2px;height:46px;background:rgba(110,59,78,.25);margin:0 auto"></div>
+      <div style="width:50px;height:62px;border-radius:50%/42%;background:radial-gradient(circle at 40% 32%,#F8A6BC,#D8466B);box-shadow:0 0 36px 6px rgba(216,70,107,.4);position:relative"><div style="position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:24px;height:6px;border-radius:3px;background:#8a3149"></div><div style="position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:24px;height:6px;border-radius:3px;background:#8a3149"></div></div>
+    </div>
+    <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+      <sc-for list="{{ petals }}" as="p" hint-placeholder-count="0">
+        <span style="position:absolute;top:-10%;left:{{ p.left }}%;width:{{ p.size }}px;height:{{ p.size }}px;background:{{ p.color }};border-radius:100% 0 100% 0;animation:fall {{ p.dur }}s linear {{ p.delay }}s infinite;will-change:transform"></span>
+      </sc-for>
+    </div>
+    <div style="max-width:1340px;margin:0 auto;padding:clamp(60px,8vh,90px) clamp(20px,5vw,48px);width:100%;position:relative;z-index:2;display:grid;gap:clamp(28px,4vw,56px);grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));align-items:center">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:16px">コレクション 2026 · AKIHABARA EDIT</div>
+        <h1 style="font-weight:900;font-size:clamp(2.7rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 20px">Descubre el universo del <span style="color:var(--pink);position:relative">anime</span></h1>
+        <p style="font-size:clamp(16px,1.6vw,20px);line-height:1.6;color:rgba(30,30,30,.7);max-width:460px;margin:0 0 30px">Las mejores figuras originales para verdaderos coleccionistas.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px">
+          <button onClick="{{ goFiguras }}" style="background:var(--ink);color:#fff;border:none;border-radius:999px;padding:16px 32px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s;box-shadow:0 18px 36px -20px rgba(30,30,30,.7)" style-hover="transform:translateY(-3px);background:var(--pink);box-shadow:0 22px 44px -20px rgba(244,143,177,1)">Comprar ahora</button>
+          <button onClick="{{ goNovedades }}" style="background:rgba(255,255,255,.7);color:var(--ink);border:1px solid rgba(30,30,30,.16);border-radius:999px;padding:16px 32px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:transform .25s,border-color .25s;backdrop-filter:blur(6px)" style-hover="transform:translateY(-3px);border-color:var(--pink)">Ver novedades</button>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:13px;color:rgba(30,30,30,.55);display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="color:#F6B73C">★★★★★</span> 4.9 · 12.000+ pedidos · Envíos a todo el país</div>
+      </div>
+      <div data-parallax data-speed="-.04" style="position:relative;display:flex;justify-content:center">
+        <div style="position:relative;width:min(100%,420px);animation:floaty 7s ease-in-out infinite">
+          <div style="aspect-ratio:4/5;border-radius:32px;background:repeating-linear-gradient(135deg,rgba(255,255,255,0) 0 18px,rgba(255,255,255,.5) 18px 19px),linear-gradient(160deg,hsl(270 60% 96%),hsl(270 52% 87%));box-shadow:0 50px 100px -50px rgba(180,120,200,.9);border:1px solid rgba(255,255,255,.8);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+            <img src="{{ heroImg }}" alt="Figura destacada" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+            <div style="position:absolute;top:16px;left:16px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:7px 13px;border-radius:999px">Preventa</div>
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:22px 18px 18px;background:linear-gradient(0deg,rgba(255,255,255,.95),transparent)">
+              <div style="font-size:12px;color:rgba(30,30,30,.55);font-family:'Space Mono',monospace">JUJUTSU KAISEN</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                <strong style="font-size:18px">Gojo · Infinity</strong>
+                <span style="background:var(--pink);color:#fff;font-weight:700;padding:7px 12px;border-radius:999px;font-size:14px;white-space:nowrap">₲ 610.000</span>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:-14px;right:-10px;width:118px;height:118px;border-radius:50%;background:#fff;box-shadow:0 26px 50px -22px rgba(244,143,177,1);overflow:hidden;border:4px solid #fff;animation:floaty2 5s ease-in-out infinite"><img src="assets/sakura-logo.png" alt="" style="width:135%;height:135%;object-fit:cover;object-position:center 22%;transform:translate(-13%,2%)"/></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- categorias -->
+  <section style="padding:clamp(56px,8vw,108px) 0">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+      <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)">
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:10px">EXPLORA</div>
+          <h2 style="font-weight:900;font-size:clamp(2rem,4vw,3.2rem);margin:0;letter-spacing:-.02em">Categorías</h2>
+          <p style="font-family:'Klee One',cursive;font-size:19px;color:rgba(30,30,30,.55);margin:6px 0 0">encuentra tu mundo favorito</p>
+        </div>
+        <button onClick="{{ goFiguras }}" style="background:none;border:1px solid rgba(30,30,30,.16);border-radius:999px;padding:11px 22px;font:inherit;font-weight:600;cursor:pointer;transition:all .2s" style-hover="border-color:var(--pink);color:var(--pink)">Ver todas →</button>
+      </div>
+      <div data-reveal style="display:grid;gap:clamp(13px,1.5vw,20px);grid-template-columns:repeat(auto-fill,minmax(clamp(148px,15vw,196px),1fr));transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)">
+        <sc-for list="{{ categories }}" as="c" hint-placeholder-count="12">
+          <div onClick="{{ c.onClick }}" style="position:relative;border-radius:22px;overflow:hidden;cursor:pointer;aspect-ratio:1/1.04;background:var(--gray);border:1px solid var(--line);box-shadow:0 16px 36px -28px rgba(244,143,177,.7);display:flex;flex-direction:column;justify-content:flex-end;padding:16px;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-7px);box-shadow:0 30px 50px -28px rgba(244,143,177,1)">
+            <img src="{{ c.img }}" alt="{{ c.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,10,22,.78),rgba(20,10,22,.05) 52%,rgba(20,10,22,.22))"></div>
+            <span style="position:absolute;top:12px;left:14px;z-index:1;font-size:clamp(28px,3vw,42px);filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))">{{ c.emoji }}</span>
+            <div style="position:relative;z-index:1">
+              <div style="font-weight:700;font-size:clamp(15px,1.4vw,18px);line-height:1.2;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)">{{ c.name }}</div>
+              <div style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,.78);margin-top:3px">{{ c.count }} productos</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- destacados -->
+  <section style="padding:clamp(20px,3vw,40px) 0 clamp(56px,8vw,100px)">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+      <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,46px);transition:opacity .8s,transform .8s">
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:10px">TOP VENTAS</div>
+          <h2 style="font-weight:900;font-size:clamp(2rem,4vw,3.2rem);margin:0;letter-spacing:-.02em">Productos destacados</h2>
+        </div>
+        <button onClick="{{ goFiguras }}" style="background:none;border:1px solid rgba(30,30,30,.16);border-radius:999px;padding:11px 22px;font:inherit;font-weight:600;cursor:pointer;transition:all .2s" style-hover="border-color:var(--pink);color:var(--pink)">Ver todo →</button>
+      </div>
+      <div data-reveal style="display:grid;gap:clamp(14px,1.6vw,24px);grid-template-columns:repeat(auto-fill,minmax(clamp(210px,21vw,256px),1fr));transition:opacity .8s,transform .8s">
+        <sc-for list="{{ featured }}" as="p" hint-placeholder-count="8">
+          <div onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 18px 40px -32px rgba(244,143,177,.7);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);box-shadow:0 34px 56px -30px rgba(244,143,177,1);border-color:rgba(244,143,177,.45)">
+            <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px">
+              <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+              <sc-if value="{{ p.badge }}"><div style="position:absolute;top:11px;left:11px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px">{{ p.badge }}</div></sc-if>
+              <sc-if value="{{ p.discount }}"><div style="position:absolute;top:11px;right:11px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px">-{{ p.discount }}%</div></sc-if>
+              <button onClick="{{ p.onFav }}" title="Favorito" style="position:absolute;bottom:11px;right:11px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:var(--pink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,0,0,.3);transition:transform .2s" style-hover="transform:scale(1.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.2 12.7a4.7 4.7 0 0 1 6.6-6.7l1.2 1.1 1.2-1.1a4.7 4.7 0 0 1 6.6 6.7Z"></path></svg></button>
+            </div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--pink);letter-spacing:.08em">{{ p.series }}</div>
+            <div style="font-weight:700;font-size:15.5px;line-height:1.25;margin:3px 0 6px;min-height:38px">{{ p.name }}</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(30,30,30,.6);margin-bottom:9px"><span style="color:#F6B73C">★</span> {{ p.ratingStr }} <span style="opacity:.4">·</span> <span style="color:{{ p.stockColor }}">{{ p.stockMini }}</span></div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto">
+              <strong style="font-size:18px">{{ p.priceF }}</strong>
+              <sc-if value="{{ p.oldF }}"><span style="font-size:13px;color:rgba(30,30,30,.4);text-decoration:line-through">{{ p.oldF }}</span></sc-if>
+            </div>
+            <button onClick="{{ p.onAdd }}" style="margin-top:12px;width:100%;background:var(--ink);color:#fff;border:none;border-radius:13px;padding:12px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .25s,transform .2s" style-hover="background:var(--pink);transform:translateY(-2px)">Comprar</button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- marcas -->
+  <section style="padding:clamp(40px,6vw,72px) 0;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <p data-reveal style="text-align:center;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(30,30,30,.45);margin:0 0 28px;transition:opacity .8s,transform .8s">Trabajamos con las mejores marcas</p>
+    <div style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+      <div style="display:flex;gap:18px;width:max-content;animation:marquee 34s linear infinite" style-hover="animation-play-state:paused">
+        <sc-for list="{{ brandsLoop }}" as="brand" hint-placeholder-count="9">
+          <div style="flex-shrink:0;width:200px;height:78px;display:grid;place-items:center;background:var(--gray);border:1px solid var(--line);border-radius:16px;font-weight:700;font-size:17px;color:rgba(30,30,30,.45);transition:color .25s,background .25s" style-hover="color:var(--pink);background:var(--pink-soft)">{{ brand.name }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- banner promocional -->
+  <section style="padding:clamp(56px,8vw,100px) 0">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+      <div data-reveal style="border-radius:30px;overflow:hidden;position:relative;background:linear-gradient(120deg,var(--pink) 0%,var(--lila) 60%,var(--pink-soft) 100%);background-size:200% 200%;animation:shift 9s ease-in-out infinite alternate;padding:clamp(36px,5vw,64px);display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:center;transition:opacity .8s,transform .8s;box-shadow:0 40px 80px -50px rgba(244,143,177,1)">
+        <img src="{{ bannerImg }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2;mix-blend-mode:soft-light"/>
+        <div data-parallax data-speed=".04" style="position:absolute;right:-40px;top:-40px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.18)"></div>
+        <div style="position:relative;z-index:1">
+          <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(30,30,30,.6);margin-bottom:14px">PREVENTAS ABIERTAS</div>
+          <h2 style="font-weight:900;font-size:clamp(1.8rem,3.6vw,3rem);margin:0 0 14px;color:#fff;letter-spacing:-.02em;text-shadow:0 4px 20px rgba(150,60,90,.25)">Asegura tu figura antes que nadie</h2>
+          <p style="color:rgba(255,255,255,.92);font-size:17px;margin:0 0 22px;max-width:440px">Reserva los lanzamientos más esperados con un depósito y recíbelos apenas lleguen al país.</p>
+          <button onClick="{{ goPreventas }}" style="background:var(--ink);color:#fff;border:none;border-radius:999px;padding:15px 30px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-3px);box-shadow:0 20px 40px -18px rgba(30,30,30,.8)">Ver preventas</button>
+        </div>
+        <div style="position:relative;z-index:1;display:grid;gap:12px;grid-template-columns:1fr 1fr">
+          <sc-for list="{{ promoChips }}" as="ch" hint-placeholder-count="4">
+            <div style="background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border-radius:16px;padding:16px;display:flex;align-items:center;gap:11px;font-weight:600;font-size:14.5px"><span style="font-size:22px">{{ ch.i }}</span>{{ ch.t }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- beneficios -->
+  <section style="padding:0 0 clamp(56px,8vw,100px)">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+      <div data-reveal style="display:grid;gap:clamp(14px,1.6vw,22px);grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));transition:opacity .8s,transform .8s">
+        <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-6px);box-shadow:0 28px 50px -34px rgba(244,143,177,.9)">
+            <div style="width:54px;height:54px;border-radius:16px;background:var(--pink-soft);display:grid;place-items:center;font-size:26px;margin-bottom:16px">{{ b.i }}</div>
+            <div style="font-weight:700;font-size:17px;margin-bottom:6px">{{ b.t }}</div>
+            <p style="margin:0;color:rgba(30,30,30,.6);font-size:14px;line-height:1.55">{{ b.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- novedades -->
+  <section style="padding:clamp(40px,6vw,72px) 0;background:linear-gradient(180deg,var(--lila-soft),var(--pink-pale));overflow:hidden">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px) clamp(24px,3vw,38px)">
+      <div data-reveal style="transition:opacity .8s,transform .8s">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:10px">JUST DROPPED</div>
+        <h2 style="font-weight:900;font-size:clamp(2rem,4vw,3.2rem);margin:0;letter-spacing:-.02em">Novedades</h2>
+        <p style="font-family:'Klee One',cursive;font-size:19px;color:rgba(30,30,30,.55);margin:6px 0 0">recién llegadas a la tienda</p>
+      </div>
+    </div>
+    <div style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)">
+      <div style="display:flex;gap:18px;width:max-content;padding:0 clamp(20px,5vw,48px);animation:marquee 42s linear infinite" style-hover="animation-play-state:paused">
+        <sc-for list="{{ novedadesLoop }}" as="p" hint-placeholder-count="10">
+          <div onClick="{{ p.onOpen }}" style="flex-shrink:0;width:230px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:13px;cursor:pointer;box-shadow:0 16px 38px -30px rgba(244,143,177,.7);transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-7px);box-shadow:0 30px 50px -28px rgba(244,143,177,1)">
+            <div style="position:relative;border-radius:15px;overflow:hidden;aspect-ratio:1/1;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:11px"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/><sc-if value="{{ p.badge }}"><div style="position:absolute;top:9px;left:9px;background:var(--pink);color:#fff;font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px">{{ p.badge }}</div></sc-if></div>
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--pink)">{{ p.series }}</div>
+            <div style="font-weight:700;font-size:14px;line-height:1.25;margin:2px 0 6px;min-height:34px">{{ p.name }}</div>
+            <strong style="font-size:16px">{{ p.priceF }}</strong>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- reseñas -->
+  <section style="padding:clamp(56px,8vw,100px) 0">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+      <div data-reveal style="text-align:center;margin-bottom:clamp(30px,4vw,50px);transition:opacity .8s,transform .8s">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:10px">RESEÑAS</div>
+        <h2 style="font-weight:900;font-size:clamp(2rem,4vw,3.2rem);margin:0;letter-spacing:-.02em">Lo que dicen nuestros otakus</h2>
+      </div>
+      <div data-reveal style="display:grid;gap:clamp(14px,1.6vw,22px);grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));transition:opacity .8s,transform .8s">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;box-shadow:0 18px 40px -34px rgba(244,143,177,.8)">
+            <div style="color:#F6B73C;font-size:15px;letter-spacing:2px;margin-bottom:12px">★★★★★</div>
+            <p style="margin:0 0 18px;font-size:14.5px;line-height:1.6;color:rgba(30,30,30,.82);flex:1">{{ r.text }}</p>
+            <div style="display:flex;align-items:center;gap:11px">
+              <div style="width:42px;height:42px;border-radius:50%;overflow:hidden;background:{{ r.bg }};flex-shrink:0"><img src="{{ r.avatar }}" alt="{{ r.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover"/></div>
+              <div><div style="font-weight:700;font-size:14px">{{ r.name }}</div><div style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(30,30,30,.5)">{{ r.loc }}</div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- newsletter -->
+  <section style="padding:0 0 clamp(56px,8vw,100px)">
+    <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+      <div data-reveal style="position:relative;overflow:hidden;border-radius:30px;background:linear-gradient(130deg,var(--pink-soft),var(--lila-soft));border:1px solid var(--line);padding:clamp(40px,6vw,72px) clamp(28px,5vw,56px);text-align:center;transition:opacity .8s,transform .8s">
+        <div style="width:92px;height:92px;border-radius:50%;background:#fff;box-shadow:0 22px 44px -22px rgba(244,143,177,1);overflow:hidden;margin:0 auto 20px;border:4px solid #fff;animation:floaty 6s ease-in-out infinite"><img src="assets/sakura-logo.png" alt="" style="width:140%;height:140%;object-fit:cover;object-position:center 24%;transform:translate(-14%,2%)"/></div>
+        <h2 style="font-weight:900;font-size:clamp(1.8rem,3.6vw,2.8rem);margin:0 0 10px;letter-spacing:-.02em">Únete al club Sakura</h2>
+        <p style="color:rgba(30,30,30,.65);font-size:16px;margin:0 auto 26px;max-width:440px">Recibe preventas exclusivas, ofertas y lanzamientos antes que nadie. Sin spam, solo cosas kawaii.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:470px;margin:0 auto">
+          <input type="email" placeholder="tu@correo.com" style="flex:1;min-width:200px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:15px 22px;font:inherit;font-size:15px;outline:none"/>
+          <button style="background:var(--ink);color:#fff;border:none;border-radius:999px;padding:15px 30px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:background .25s,transform .2s" style-hover="background:var(--pink);transform:translateY(-2px)">Suscribirme</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SakuraFooter" go-home="{{ goHome }}" go-cat="{{ openCatRaw }}" hint-size="100%,420px"></dc-import>
+</main>
+</sc-if>
+
+<!-- ===================== CATEGORY ===================== -->
+<sc-if value="{{ screenCat }}">
+<main style="padding:clamp(28px,4vw,48px) 0 clamp(56px,8vw,100px)">
+  <div style="max-width:1340px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+    <div style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(30,30,30,.5);margin-bottom:18px"><span onClick="{{ goHome }}" style="cursor:pointer;color:var(--pink)">Inicio</span> / {{ catName }}</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(24px,3vw,40px)">
+      <div>
+        <h1 style="font-weight:900;font-size:clamp(2rem,4.4vw,3.2rem);margin:0;letter-spacing:-.02em">{{ catName }}</h1>
+        <p style="font-family:'Space Mono',monospace;font-size:13px;color:rgba(30,30,30,.5);margin:8px 0 0">{{ catCount }} resultados</p>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(30,30,30,.6)">Ordenar por
+        <select onChange="{{ onSort }}" value="{{ sort }}" style="border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font:inherit;font-size:14px;cursor:pointer;outline:none">
+          <sc-for list="{{ sortOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o }}">{{ o }}</option></sc-for>
+        </select>
+      </label>
+    </div>
+    <div style="display:grid;gap:clamp(20px,3vw,38px);grid-template-columns:{{ catGrid }};align-items:start">
+      <aside style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;position:{{ asideStick }};top:160px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:14px">Filtrar</div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(30,30,30,.45);margin-bottom:10px">Categoría</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px">
+          <sc-for list="{{ filterCats }}" as="f" hint-placeholder-count="10">
+            <button onClick="{{ f.onClick }}" style="border:1px solid {{ f.border }};background:{{ f.bgc }};color:{{ f.fg }};border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s">{{ f.name }}</button>
+          </sc-for>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(30,30,30,.45);margin-bottom:10px">Disponibilidad</div>
+        <label style="display:flex;align-items:center;gap:9px;font-size:14px;padding:6px 0;cursor:pointer"><input type="checkbox" style="accent-color:var(--pink);width:17px;height:17px"/> En stock</label>
+        <label style="display:flex;align-items:center;gap:9px;font-size:14px;padding:6px 0;cursor:pointer"><input type="checkbox" style="accent-color:var(--pink);width:17px;height:17px"/> Preventa</label>
+        <label style="display:flex;align-items:center;gap:9px;font-size:14px;padding:6px 0 16px;cursor:pointer"><input type="checkbox" style="accent-color:var(--pink);width:17px;height:17px"/> En oferta</label>
+      </aside>
+      <div style="display:grid;gap:clamp(14px,1.6vw,24px);grid-template-columns:repeat(auto-fill,minmax(clamp(190px,20vw,240px),1fr))">
+        <sc-for list="{{ catProducts }}" as="p" hint-placeholder-count="8">
+          <div onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 18px 40px -32px rgba(244,143,177,.7);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);box-shadow:0 34px 56px -30px rgba(244,143,177,1);border-color:rgba(244,143,177,.45)">
+            <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px">
+              <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+              <sc-if value="{{ p.badge }}"><div style="position:absolute;top:11px;left:11px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px">{{ p.badge }}</div></sc-if>
+              <sc-if value="{{ p.discount }}"><div style="position:absolute;top:11px;right:11px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px">-{{ p.discount }}%</div></sc-if>
+              <button onClick="{{ p.onFav }}" title="Favorito" style="position:absolute;bottom:11px;right:11px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:var(--pink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,0,0,.3);transition:transform .2s" style-hover="transform:scale(1.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.2 12.7a4.7 4.7 0 0 1 6.6-6.7l1.2 1.1 1.2-1.1a4.7 4.7 0 0 1 6.6 6.7Z"></path></svg></button>
+            </div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--pink)">{{ p.series }}</div>
+            <div style="font-weight:700;font-size:15.5px;line-height:1.25;margin:3px 0 6px;min-height:38px">{{ p.name }}</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(30,30,30,.6);margin-bottom:9px"><span style="color:#F6B73C">★</span> {{ p.ratingStr }}</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto"><strong style="font-size:18px">{{ p.priceF }}</strong><sc-if value="{{ p.oldF }}"><span style="font-size:13px;color:rgba(30,30,30,.4);text-decoration:line-through">{{ p.oldF }}</span></sc-if></div>
+            <button onClick="{{ p.onAdd }}" style="margin-top:12px;width:100%;background:var(--ink);color:#fff;border:none;border-radius:13px;padding:12px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .25s,transform .2s" style-hover="background:var(--pink);transform:translateY(-2px)">Comprar</button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<!-- ===================== PRODUCT ===================== -->
+<sc-if value="{{ screenProduct }}">
+<main style="padding:clamp(28px,4vw,48px) 0 clamp(56px,8vw,100px)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,48px)">
+    <div style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(30,30,30,.5);margin-bottom:24px"><span onClick="{{ goHome }}" style="cursor:pointer;color:var(--pink)">Inicio</span> / <span onClick="{{ product.onSeries }}" style="cursor:pointer;color:var(--pink)">{{ product.series }}</span> / {{ product.name }}</div>
+    <div style="display:grid;gap:clamp(26px,4vw,56px);grid-template-columns:{{ pdGrid }};align-items:start">
+      <div>
+        <div style="border-radius:26px;overflow:hidden;aspect-ratio:4/5;background:var(--gray);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 40px 80px -50px rgba(244,143,177,1);border:1px solid var(--line)">
+          <img src="{{ mainImg }}" alt="{{ product.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <sc-if value="{{ product.badge }}"><div style="position:absolute;top:16px;left:16px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px">{{ product.badge }}</div></sc-if>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:13px">
+          <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="4">
+            <div onClick="{{ g.onClick }}" style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--gray);cursor:pointer;border:2px solid {{ g.ring }};transition:border-color .2s"><img src="{{ g.thumb }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"/></div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin-bottom:10px">{{ product.series }}</div>
+        <h1 style="font-weight:900;font-size:clamp(1.8rem,3.6vw,2.7rem);margin:0 0 12px;letter-spacing:-.02em;line-height:1.1">{{ product.name }}</h1>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(30,30,30,.6);margin-bottom:22px"><span style="color:#F6B73C;letter-spacing:1px">★★★★★</span> {{ product.ratingStr }} <span style="opacity:.4">·</span> 128 reseñas</div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+          <strong style="font-size:34px;letter-spacing:-.01em">{{ product.priceF }}</strong>
+          <sc-if value="{{ product.oldF }}"><span style="font-size:18px;color:rgba(30,30,30,.4);text-decoration:line-through">{{ product.oldF }}</span></sc-if>
+          <sc-if value="{{ product.discount }}"><span style="background:var(--pink);color:#fff;font-weight:700;padding:5px 11px;border-radius:999px;font-size:14px">-{{ product.discount }}%</span></sc-if>
+        </div>
+        <div style="font-size:14px;color:{{ product.stockColor }};font-weight:600;margin-bottom:22px">● {{ product.stockLabel }}</div>
+        <p style="color:rgba(30,30,30,.7);font-size:15px;line-height:1.65;margin:0 0 26px;max-width:520px">Figura coleccionable de edición premium con acabados de alta calidad, base incluida y empaque original. Pieza ideal para exhibir y para verdaderos fanáticos de {{ product.series }}.</p>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px">
+          <div style="display:flex;align-items:center;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff">
+            <button onClick="{{ qtyDec }}" style="width:46px;height:50px;border:none;background:none;font-size:20px;cursor:pointer;color:var(--ink)">−</button>
+            <span style="width:44px;text-align:center;font-weight:700;font-size:17px">{{ qty }}</span>
+            <button onClick="{{ qtyInc }}" style="width:46px;height:50px;border:none;background:none;font-size:20px;cursor:pointer;color:var(--ink)">+</button>
+          </div>
+          <button onClick="{{ addProduct }}" style="flex:1;min-width:200px;background:var(--ink);color:#fff;border:none;border-radius:14px;padding:16px 28px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;transition:background .25s,transform .2s;box-shadow:0 18px 36px -22px rgba(30,30,30,.8)" style-hover="background:var(--pink);transform:translateY(-2px)">Añadir al carrito</button>
+          <button onClick="{{ product.onFav }}" title="Favorito" style="width:52px;height:52px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--pink);display:grid;place-items:center;cursor:pointer;transition:all .2s" style-hover="background:var(--pink-soft);border-color:var(--pink)"><svg width="22" height="22" viewBox="0 0 24 24" fill="{{ product.heartFill }}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.2 12.7a4.7 4.7 0 0 1 6.6-6.7l1.2 1.1 1.2-1.1a4.7 4.7 0 0 1 6.6 6.7Z"></path></svg></button>
+        </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:rgba(30,30,30,.6);margin-bottom:28px"><span>🚚 Envío 24–72h</span><span>🛡️ Compra segura</span><span>⭐ 100% original</span></div>
+        <div style="border-top:1px solid var(--line);padding-top:22px">
+          <div style="font-weight:700;font-size:15px;margin-bottom:14px">Especificaciones</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden">
+            <sc-for list="{{ specs }}" as="s" hint-placeholder-count="6">
+              <div style="background:#fff;padding:13px 15px"><div style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(30,30,30,.45);text-transform:uppercase;letter-spacing:.06em">{{ s.k }}</div><div style="font-weight:600;font-size:14px;margin-top:2px">{{ s.v }}</div></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:clamp(48px,7vw,88px)">
+      <h2 style="font-weight:900;font-size:clamp(1.6rem,3vw,2.4rem);margin:0 0 24px;letter-spacing:-.02em">También te puede gustar</h2>
+      <div style="display:grid;gap:clamp(14px,1.6vw,24px);grid-template-columns:repeat(auto-fill,minmax(clamp(190px,20vw,240px),1fr))">
+        <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
+          <div onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 18px 40px -32px rgba(244,143,177,.7);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);box-shadow:0 34px 56px -30px rgba(244,143,177,1);border-color:rgba(244,143,177,.45)">
+            <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;margin-bottom:13px"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/></div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--pink)">{{ p.series }}</div>
+            <div style="font-weight:700;font-size:15px;line-height:1.25;margin:3px 0 6px;min-height:36px">{{ p.name }}</div>
+            <strong style="font-size:17px;margin-top:auto">{{ p.priceF }}</strong>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:clamp(56px,8vw,100px)"></div>
+  <dc-import name="SakuraFooter" go-home="{{ goHome }}" go-cat="{{ openCatRaw }}" hint-size="100%,420px"></dc-import>
+</main>
+</sc-if>
+
+<sc-if value="{{ toast }}">
+<div style="position:fixed;left:50%;bottom:30px;transform:translateX(-50%);z-index:90;background:var(--ink);color:#fff;padding:14px 24px;border-radius:999px;font-weight:600;font-size:14px;box-shadow:0 24px 50px -20px rgba(30,30,30,.7);animation:pop .35s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;gap:10px">✓ {{ toast }}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;primaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#F48FB1&quot;,&quot;options&quot;:[&quot;#F48FB1&quot;,&quot;#EC9CB5&quot;,&quot;#E57FA3&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},&quot;secondaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C9B6E8&quot;,&quot;options&quot;:[&quot;#C9B6E8&quot;,&quot;#AED6F1&quot;,&quot;#D7C9F0&quot;,&quot;#E8DCC8&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},&quot;showPetals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;}}">
+class Component extends DCLogic {
+  state = { screen:'home', menuOpen:false, isMobile:false, cart:2, favs:{}, cat:'Figuras', sort:'Destacados', productId:6, gallery:0, qty:1, toast:null };
+
+  componentDidMount(){
+    this.applyTheme();
+    this._rz = () => { const m = window.innerWidth < 880; if (m !== this.state.isMobile) this.setState({ isMobile:m }); };
+    this._rz();
+    window.addEventListener('resize', this._rz);
+    this._sc = () => { const y = window.scrollY||0; if(this._root){ this._root.querySelectorAll('[data-parallax]').forEach(el=>{ const s=parseFloat(el.getAttribute('data-speed')||'.1'); el.style.transform='translate3d(0,'+(y*s).toFixed(1)+'px,0)'; }); } };
+    window.addEventListener('scroll', this._sc, { passive:true });
+    if (this._root) this._root.addEventListener('error', (e)=>{ if(e.target && e.target.tagName==='IMG'){ e.target.style.opacity='0'; } }, true);
+    this.reveal();
+  }
+  componentDidUpdate(prev){
+    this.applyTheme();
+    if (prev.screen !== this.state.screen){ try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){ window.scrollTo(0,0); } this.reveal(); }
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this._rz); window.removeEventListener('scroll', this._sc); }
+
+  applyTheme(){
+    const r = document.documentElement.style;
+    if (this.props.primaryColor) r.setProperty('--pink', this.props.primaryColor);
+    if (this.props.secondaryColor) r.setProperty('--lila', this.props.secondaryColor);
+  }
+
+  reveal(){
+    // Content is visible by default. The observer only ADDS an entrance animation,
+    // so nothing can ever get stuck hidden (works even if JS/IO never fires).
+    if (!this._root) return;
+    if (!('IntersectionObserver' in window)) return;
+    const els = [...this._root.querySelectorAll('[data-reveal]:not([data-shown])')];
+    const io = new IntersectionObserver((ents)=>{
+      ents.forEach(en=>{ if(en.isIntersecting){ const el=en.target; el.setAttribute('data-shown',''); el.style.animation='revealIn .8s cubic-bezier(.2,.7,.2,1) both'; io.unobserve(el); } });
+    }, { threshold:.08, rootMargin:'0px 0px -5% 0px' });
+    els.forEach(e=>io.observe(e));
+  }
+
+  fmt(n){ return '₲ ' + Math.round(n).toLocaleString('es-PY'); }
+  bg(h){ return "repeating-linear-gradient(135deg,rgba(255,255,255,0) 0 17px,rgba(255,255,255,.5) 17px 18px),linear-gradient(160deg,hsl("+h+" 60% 96%),hsl("+h+" 52% 88%))"; }
+  fig(seed,w,h){ return 'https://loremflickr.com/'+(w||600)+'/'+(h||750)+'/figure,toy,collectible?lock='+seed; }
+  jp(tags,seed,w,h){ return 'https://loremflickr.com/'+(w||800)+'/'+(h||800)+'/'+tags+'?lock='+seed; }
+  waifu(seed){ return 'https://www.thiswaifudoesnotexist.net/example-'+((Math.abs(seed)%100000)+1)+'.jpg'; }
+  tagFor(name){ const T={'One Piece':'pirate,ship,sea','Naruto':'ninja,japan,temple','Dragon Ball':'dragon,fire,sky','Demon Slayer':'katana,samurai,forest','Jujutsu Kaisen':'tokyo,neon,night','Bleach':'samurai,katana,moon','Chainsaw Man':'chainsaw,industrial,city','Attack on Titan':'castle,wall,ruins','Pokémon':'plush,toys,colorful','Figuras':'anime,figure,collectible','Videojuegos':'arcade,gaming,controller','Nendoroid':'toy,cute,figurine','Funko Pop':'vinyl,toy,collectible','Preventas':'package,parcel,box','Ofertas':'store,sale,shopping'}; return T[name]||'anime,figure,collectible'; }
+
+  go(s){ this.setState({ screen:s, menuOpen:false }); }
+  openCat(name){ this.setState({ screen:'category', cat:name, menuOpen:false, sort:'Destacados' }); }
+  openProduct(id){ this.setState({ screen:'product', productId:id, gallery:0, qty:1, menuOpen:false }); }
+  addCart(name, n){ const q=n||1; this.setState(s=>({ cart:s.cart+q, toast:'Añadido al carrito: '+name })); clearTimeout(this._tt); this._tt=setTimeout(()=>this.setState({toast:null}),2200); }
+  toggleFav(id){ this.setState(s=>{ const f={...s.favs}; if(f[id]) delete f[id]; else f[id]=1; return { favs:f, toast: f[id]?'Añadido a favoritos ♥':'Quitado de favoritos' }; }); clearTimeout(this._tt); this._tt=setTimeout(()=>this.setState({toast:null}),1800); }
+
+  data(){
+    return [
+      {id:1,name:'Monkey D. Luffy · Gear 5',series:'One Piece',price:485000,old:560000,stock:6,rating:4.9,badge:'Preventa',hue:345},
+      {id:2,name:'Roronoa Zoro · King of Hell',series:'One Piece',price:420000,stock:12,rating:4.8,hue:150},
+      {id:3,name:'Naruto Uzumaki · Sage Mode',series:'Naruto',price:365000,old:410000,stock:4,rating:4.7,badge:'Oferta',hue:30},
+      {id:4,name:'Son Goku · Ultra Instinct',series:'Dragon Ball',price:540000,stock:9,rating:5.0,badge:'Nuevo',hue:205},
+      {id:5,name:'Tanjiro Kamado · Hinokami',series:'Demon Slayer',price:398000,old:450000,stock:7,rating:4.9,hue:150},
+      {id:6,name:'Gojo Satoru · Infinity',series:'Jujutsu Kaisen',price:610000,stock:3,rating:5.0,badge:'Preventa',hue:270},
+      {id:7,name:'Nezuko Kamado · Demon Form',series:'Demon Slayer',price:372000,stock:15,rating:4.8,badge:'Nuevo',hue:345},
+      {id:8,name:'Denji · Chainsaw Devil',series:'Chainsaw Man',price:355000,old:399000,stock:8,rating:4.6,hue:18},
+      {id:9,name:'Levi Ackerman · Survey Corps',series:'Attack on Titan',price:430000,stock:5,rating:4.9,hue:95},
+      {id:10,name:'Pikachu · Nendoroid',series:'Pokémon',price:215000,stock:20,rating:4.7,badge:'Nuevo',hue:50},
+      {id:11,name:'Ichigo Kurosaki · Bankai',series:'Bleach',price:388000,old:440000,stock:6,rating:4.8,hue:205},
+      {id:12,name:'Vegeta · Royal Blue',series:'Dragon Ball',price:505000,stock:4,rating:4.9,badge:'Preventa',hue:225}
+    ];
+  }
+
+  mk(p){
+    const faved = !!this.state.favs[p.id];
+    const low = p.stock <= 5;
+    return Object.assign({}, p, {
+      priceF: this.fmt(p.price),
+      oldF: p.old ? this.fmt(p.old) : null,
+      discount: p.old ? Math.round((1 - p.price/p.old)*100) : null,
+      ratingStr: p.rating.toFixed(1),
+      bg: this.bg(p.hue),
+      img: this.jp('anime,figure,toy,collectible', p.id*61+7, 700, 850),
+      imgL: this.jp('anime,figure,toy,collectible', p.id*61+7, 900, 1100),
+      cap: 'FIGURA · ' + p.series.toUpperCase(),
+      heartFill: faved ? 'var(--pink)' : 'none',
+      stockMini: low ? 'Últimas '+p.stock : 'En stock',
+      stockColor: low ? '#D8466B' : '#3FA06A',
+      stockLabel: low ? 'Últimas '+p.stock+' unidades disponibles' : 'En stock · listo para enviar',
+      onOpen: () => this.openProduct(p.id),
+      onFav: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.toggleFav(p.id); },
+      onAdd: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.addCart(p.name,1); },
+      onSeries: () => this.openCat(p.series)
+    });
+  }
+
+  renderVals(){
+    const m = this.state.isMobile;
+    const products = this.data().map(p => this.mk(p));
+    const byId = id => products.find(x => x.id === id) || products[0];
+
+    // categories
+    const catsRaw = [
+      ['Figuras','🌸',248,345],['One Piece','⚔️',64,150],['Naruto','🍥',52,30],['Dragon Ball','⚡',71,205],
+      ['Demon Slayer','👹',43,150],['Jujutsu Kaisen','🌀',38,270],['Bleach','🏴‍☠️',29,205],['Chainsaw Man','👒',24,18],
+      ['Attack on Titan','🎌',33,95],['Pokémon','⭐',58,50],['Videojuegos','🎮',41,260],['Nendoroid','🎎',86,330],
+      ['Funko Pop','🧸',77,35],['Preventas','🗡️',19,200],['Ofertas','🔥',31,20]
+    ];
+    const categories = catsRaw.map(([name,emoji,count,hue],i) => ({ name, emoji, count, bg:this.bg(hue), img:this.jp('anime,figures,collection,shelf', i*53+9, 520, 540), onClick:()=>this.openCat(name) }));
+
+    // brands
+    const brands = ['Bandai','Banpresto','Good Smile Company','Kotobukiya','SEGA','Taito','MegaHouse','Pop Up Parade','Funko'];
+    const brandsLoop = brands.concat(brands).map(n => ({ name:n }));
+
+    const reviews = [
+      {name:'Akari M.',loc:'Asunción',initial:'A',text:'La figura de Gojo llegó impecable, en caja original y con envío rapidísimo. La calidad es de otro nivel.',hue:270},
+      {name:'Diego R.',loc:'Encarnación',initial:'D',text:'Compré en preventa y me mantuvieron informado en todo momento. 100% originales, ya es mi tienda de confianza.',hue:205},
+      {name:'Sofía L.',loc:'Ciudad del Este',initial:'S',text:'El empaque venía hermoso, con stickers de regalo. Se nota el cariño por el detalle. Volveré sin dudarlo.',hue:345},
+      {name:'Kenji T.',loc:'Luque',initial:'K',text:'Atención por WhatsApp excelente, me ayudaron a elegir. La Nendoroid de Pikachu es divina.',hue:50}
+    ].map((r,i) => Object.assign({}, r, { bg: this.bg(r.hue), avatar:'https://i.pravatar.cc/160?img='+([47,12,5,32][i]||i+1) }));
+
+    const benefits = [
+      {i:'🚚',t:'Envíos rápidos',d:'A todo el país en 24–72 h con seguimiento en tiempo real.'},
+      {i:'🛡️',t:'Compra segura',d:'Pagos protegidos y múltiples métodos disponibles.'},
+      {i:'⭐',t:'Productos originales',d:'Distribuidores oficiales. Garantía de autenticidad.'},
+      {i:'💬',t:'Atención personalizada',d:'Te acompañamos antes, durante y después de tu compra.'}
+    ];
+
+    const promoChips = [
+      {i:'🗡️',t:'Preventas disponibles'},{i:'🚚',t:'Envíos a todo el país'},
+      {i:'✅',t:'Productos originales'},{i:'🛡️',t:'Garantía incluida'}
+    ];
+
+    const nav = [['Inicio','home'],['Figuras','Figuras'],['Preventas','Preventas'],['Novedades','Novedades'],['Ofertas','Ofertas'],['Marcas','home'],['Categorías','Figuras'],['Contacto','home']];
+    const navItems = nav.map(([label,target]) => ({ label, onClick: target==='home' ? ()=>this.go('home') : ()=>this.openCat(target) }));
+
+    const showPetals = this.props.showPetals !== false;
+    const cols = ['rgba(244,143,177,.85)','rgba(248,187,208,.8)','rgba(201,182,232,.62)','rgba(255,255,255,.9)'];
+    const petals = showPetals ? Array.from({length:14}, (_,i)=>({ left:(i*7 + (i%3)*5)%100, size:8 + (i%4)*5, dur:9 + (i%6)*2, delay:((i*0.9)%9).toFixed(1), color:cols[i%4] })) : [];
+
+    // category screen
+    const series = ['One Piece','Naruto','Dragon Ball','Demon Slayer','Jujutsu Kaisen','Bleach','Chainsaw Man','Attack on Titan','Pokémon'];
+    const c = this.state.cat;
+    let list = products.slice();
+    if (series.includes(c)) list = list.filter(p => p.series === c);
+    else if (c === 'Ofertas') list = list.filter(p => p.old);
+    else if (c === 'Preventas') list = list.filter(p => p.badge === 'Preventa');
+    else if (c === 'Novedades') list = list.filter(p => p.badge === 'Nuevo');
+    const s = this.state.sort;
+    if (s === 'Menor precio') list.sort((a,b)=>a.price-b.price);
+    else if (s === 'Mayor precio') list.sort((a,b)=>b.price-a.price);
+    else if (s === 'Mejor valorados') list.sort((a,b)=>b.rating-a.rating);
+    else if (s === 'Novedades') list.sort((a,b)=> (b.badge==='Nuevo'?1:0)-(a.badge==='Nuevo'?1:0));
+
+    const filterNames = ['Figuras'].concat(series, ['Preventas','Ofertas','Novedades']);
+    const filterCats = filterNames.map(name => {
+      const active = name === c;
+      return { name, onClick:()=>this.openCat(name),
+        bgc: active ? 'var(--pink)' : 'var(--gray)',
+        fg: active ? '#fff' : 'rgba(30,30,30,.7)',
+        border: active ? 'var(--pink)' : 'var(--line)' };
+    });
+
+    // product screen
+    const prod = byId(this.state.productId);
+    const base = prod.id*13+5;
+    const gbase = prod.id*61+7;
+    const gseeds = [gbase, gbase+500, gbase+900, gbase+1300];
+    const gallery = gseeds.map((sd,i)=>({ img:this.jp('anime,figure,toy,collectible',sd,900,1100), thumb:this.jp('anime,figure,toy,collectible',sd,300,300), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) }));
+    const mainImg = gallery[this.state.gallery] ? gallery[this.state.gallery].img : prod.imgL;
+    const related = products.filter(p => p.id !== prod.id).slice(0,4);
+    const specs = [['Escala','1/7'],['Altura','24 cm'],['Material','PVC / ABS'],['Fabricante','Good Smile Co.'],['Lanzamiento','Q3 2026'],['Autenticidad','Original ✓']].map(([k,v])=>({k,v}));
+
+    return {
+      rootRef: (el)=>{ this._root = el; },
+      desktop: !m, mobile: m, menuOpen: this.state.menuOpen,
+      drawerTransform: this.state.menuOpen ? 'translateX(0)' : 'translateX(108%)',
+      cartCount: this.state.cart, toast: this.state.toast,
+      screenHome: this.state.screen==='home', screenCat: this.state.screen==='category', screenProduct: this.state.screen==='product',
+      goHome: ()=>this.go('home'), goFiguras: ()=>this.openCat('Figuras'), goNovedades: ()=>this.openCat('Novedades'), goPreventas: ()=>this.openCat('Preventas'),
+      openCatRaw: (name)=>this.openCat(name),
+      toggleMenu: ()=>this.setState(st=>({menuOpen:!st.menuOpen})), closeMenu: ()=>this.setState({menuOpen:false}),
+      navItems, petals, categories, brandsLoop, reviews, benefits, promoChips,
+      featured: products.slice(0,8),
+      novedadesLoop: products.slice(0,10).concat(products.slice(0,10)),
+      // category
+      catName: c, catCount: list.length, catProducts: list, filterCats,
+      sort: this.state.sort, sortOptions: ['Destacados','Menor precio','Mayor precio','Mejor valorados','Novedades'],
+      onSort: (e)=>this.setState({sort:e.target.value}),
+      catGrid: m ? '1fr' : 'minmax(220px,260px) 1fr',
+      // product
+      product: prod, gallery, mainImg, related, specs, qty: this.state.qty,
+      heroImg: this.jp('anime,figure,toy,collectible', 373, 900, 1100),
+      heroBg: this.jp('tokyo,night,neon', 7, 1600, 1000),
+      bannerImg: this.jp('sakura,japan,temple', 5, 1400, 900),
+      asideStick: m ? 'static' : 'sticky',
+      pdGrid: m ? '1fr' : '1fr 1fr',
+      qtyInc: ()=>this.setState(st=>({qty:st.qty+1})), qtyDec: ()=>this.setState(st=>({qty:Math.max(1,st.qty-1)})),
+      addProduct: ()=>this.addCart(prod.name, this.state.qty)
+    };
+  }
+}
+</script>
+</body>
+</html>
