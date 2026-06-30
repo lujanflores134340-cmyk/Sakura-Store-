@@ -26,6 +26,15 @@ input::placeholder{color:rgba(30,30,30,.42)}
 @keyframes glow{0%,100%{opacity:.55}50%{opacity:.9}}
 @keyframes shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 @keyframes revealIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes catIn{from{opacity:0;transform:translateY(40px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes catFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.cat-tile{animation:catIn .7s cubic-bezier(.2,.8,.2,1) both;overflow:hidden}
+.cat-tile img{transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .4s}
+.cat-tile:hover img{transform:scale(1.14);filter:saturate(1.18) brightness(1.06)}
+.cat-emoji{display:inline-block;transition:transform .4s cubic-bezier(.2,1.5,.3,1);animation:catFloat 4.5s ease-in-out infinite}
+.cat-tile:hover .cat-emoji{transform:scale(1.3) rotate(-10deg);animation-play-state:paused}
+.cat-tile::after{content:"";position:absolute;top:0;left:0;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);transform:translateX(-150%) skewX(-22deg);pointer-events:none;transition:transform 1s ease;z-index:2}
+.cat-tile:hover::after{transform:translateX(240%) skewX(-22deg)}
 img{max-width:100%}
 @media (max-width:880px){
   header nav{gap:10px !important}
@@ -172,11 +181,11 @@ img{max-width:100%}
       </div>
       <div data-reveal style="display:grid;gap:clamp(13px,1.5vw,20px);grid-template-columns:repeat(auto-fill,minmax(clamp(148px,15vw,196px),1fr));transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)">
         <sc-for list="{{ categories }}" as="c" hint-placeholder-count="12">
-          <div onClick="{{ c.onClick }}" style="position:relative;border-radius:22px;overflow:hidden;cursor:pointer;aspect-ratio:1/1.04;background:var(--gray);border:1px solid var(--line);box-shadow:0 16px 36px -28px rgba(244,143,177,.7);display:flex;flex-direction:column;justify-content:flex-end;padding:16px;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-7px);box-shadow:0 30px 50px -28px rgba(244,143,177,1)">
+          <div onClick="{{ c.onClick }}" class="cat-tile" style="animation-delay:{{ c.delay }}s;position:relative;border-radius:22px;cursor:pointer;aspect-ratio:1/1.04;background:var(--gray);border:1px solid var(--line);box-shadow:0 16px 36px -28px rgba(244,143,177,.7);display:flex;flex-direction:column;justify-content:flex-end;padding:16px;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-9px);box-shadow:0 34px 56px -26px rgba(244,143,177,1);border-color:rgba(244,143,177,.5)">
             <img src="{{ c.img }}" alt="{{ c.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,10,22,.78),rgba(20,10,22,.05) 52%,rgba(20,10,22,.22))"></div>
-            <span style="position:absolute;top:12px;left:14px;z-index:1;font-size:clamp(28px,3vw,42px);filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))">{{ c.emoji }}</span>
-            <div style="position:relative;z-index:1">
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,10,22,.78),rgba(20,10,22,.05) 52%,rgba(20,10,22,.22));z-index:1"></div>
+            <span class="cat-emoji" style="position:absolute;top:12px;left:14px;z-index:3;font-size:clamp(28px,3vw,42px);filter:drop-shadow(0 4px 10px rgba(0,0,0,.45));animation-delay:{{ c.delay }}s">{{ c.emoji }}</span>
+            <div style="position:relative;z-index:3">
               <div style="font-weight:700;font-size:clamp(15px,1.4vw,18px);line-height:1.2;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)">{{ c.name }}</div>
               <div style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,.78);margin-top:3px">{{ c.count }} productos</div>
             </div>
@@ -560,7 +569,7 @@ class Component extends DCLogic {
       ['Attack on Titan','🎌',33,95],['Pokémon','⭐',58,50],['Videojuegos','🎮',41,260],['Nendoroid','🎎',86,330],
       ['Funko Pop','🧸',77,35],['Preventas','🗡️',19,200],['Ofertas','🔥',31,20]
     ];
-    const categories = catsRaw.map(([name,emoji,count,hue],i) => ({ name, emoji, count, bg:this.bg(hue), img:this.jp(this.tagFor(name), i*53+9, 520, 540), onClick:()=>this.openCat(name) }));
+    const categories = catsRaw.map(([name,emoji,count,hue],i) => ({ name, emoji, count, bg:this.bg(hue), img:this.jp(this.tagFor(name), i*53+9, 520, 540), delay:(i*0.06).toFixed(2), onClick:()=>this.openCat(name) }));
 
     // brands
     const brands = ['Bandai','Banpresto','Good Smile Company','Kotobukiya','SEGA','Taito','MegaHouse','Pop Up Parade','Funko'];
