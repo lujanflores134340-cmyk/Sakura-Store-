@@ -26,6 +26,25 @@ input::placeholder{color:rgba(30,30,30,.42)}
 @keyframes glow{0%,100%{opacity:.55}50%{opacity:.9}}
 @keyframes shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 @keyframes revealIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+img{max-width:100%}
+@media (max-width:880px){
+  header nav{gap:10px !important}
+}
+@media (max-width:640px){
+  h1{font-size:clamp(2rem,9vw,2.8rem) !important}
+  h2{font-size:clamp(1.6rem,7vw,2.2rem) !important}
+}
+@media (max-width:480px){
+  body{font-size:15px}
+  header > div:first-child{padding:10px 14px !important;gap:8px !important}
+  header img[alt="Sakura Store"]{height:42px !important}
+  header button{width:40px !important;height:40px !important}
+  section{padding-left:0 !important;padding-right:0 !important}
+}
+@media (max-width:380px){
+  header img[alt="Sakura Store"]{height:36px !important}
+  header button{width:38px !important;height:38px !important;border-radius:11px !important}
+}
 </style>
 </helmet>
 <div ref="{{ rootRef }}" style="font-family:'Zen Kaku Gothic New',sans-serif;color:var(--ink);background:var(--pink-pale);min-height:100vh;overflow-x:clip;position:relative">
@@ -514,8 +533,8 @@ class Component extends DCLogic {
       discount: p.old ? Math.round((1 - p.price/p.old)*100) : null,
       ratingStr: p.rating.toFixed(1),
       bg: this.bg(p.hue),
-      img: this.jp('anime,figure,toy,collectible', p.id*61+7, 700, 850),
-      imgL: this.jp('anime,figure,toy,collectible', p.id*61+7, 900, 1100),
+      img: this.jp(this.tagFor(p.series), p.id*61+7, 700, 850),
+      imgL: this.jp(this.tagFor(p.series), p.id*61+7, 900, 1100),
       cap: 'FIGURA · ' + p.series.toUpperCase(),
       heartFill: faved ? 'var(--pink)' : 'none',
       stockMini: low ? 'Últimas '+p.stock : 'En stock',
@@ -540,7 +559,7 @@ class Component extends DCLogic {
       ['Attack on Titan','🎌',33,95],['Pokémon','⭐',58,50],['Videojuegos','🎮',41,260],['Nendoroid','🎎',86,330],
       ['Funko Pop','🧸',77,35],['Preventas','🗡️',19,200],['Ofertas','🔥',31,20]
     ];
-    const categories = catsRaw.map(([name,emoji,count,hue],i) => ({ name, emoji, count, bg:this.bg(hue), img:this.jp('anime,figures,collection,shelf', i*53+9, 520, 540), onClick:()=>this.openCat(name) }));
+    const categories = catsRaw.map(([name,emoji,count,hue],i) => ({ name, emoji, count, bg:this.bg(hue), img:this.jp(this.tagFor(name), i*53+9, 520, 540), onClick:()=>this.openCat(name) }));
 
     // brands
     const brands = ['Bandai','Banpresto','Good Smile Company','Kotobukiya','SEGA','Taito','MegaHouse','Pop Up Parade','Funko'];
@@ -600,7 +619,8 @@ class Component extends DCLogic {
     const base = prod.id*13+5;
     const gbase = prod.id*61+7;
     const gseeds = [gbase, gbase+500, gbase+900, gbase+1300];
-    const gallery = gseeds.map((sd,i)=>({ img:this.jp('anime,figure,toy,collectible',sd,900,1100), thumb:this.jp('anime,figure,toy,collectible',sd,300,300), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) }));
+    const prodTag = this.tagFor(prod.series);
+    const gallery = gseeds.map((sd,i)=>({ img:this.jp(prodTag,sd,900,1100), thumb:this.jp(prodTag,sd,300,300), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) }));
     const mainImg = gallery[this.state.gallery] ? gallery[this.state.gallery].img : prod.imgL;
     const related = products.filter(p => p.id !== prod.id).slice(0,4);
     const specs = [['Escala','1/7'],['Altura','24 cm'],['Material','PVC / ABS'],['Fabricante','Good Smile Co.'],['Lanzamiento','Q3 2026'],['Autenticidad','Original ✓']].map(([k,v])=>({k,v}));
@@ -624,7 +644,7 @@ class Component extends DCLogic {
       catGrid: m ? '1fr' : 'minmax(220px,260px) 1fr',
       // product
       product: prod, gallery, mainImg, related, specs, qty: this.state.qty,
-      heroImg: this.jp('anime,figure,toy,collectible', 373, 900, 1100),
+      heroImg: this.jp('tokyo,neon,night', 373, 900, 1100),
       heroBg: this.jp('tokyo,night,neon', 7, 1600, 1000),
       bannerImg: this.jp('sakura,japan,temple', 5, 1400, 900),
       asideStick: m ? 'static' : 'sticky',
