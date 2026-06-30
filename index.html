@@ -509,18 +509,18 @@ class Component extends DCLogic {
 
   data(){
     return [
-      {id:1,name:'Monkey D. Luffy · Gear 5',series:'One Piece',price:485000,old:560000,stock:6,rating:4.9,badge:'Preventa',hue:345,figTag:'luffy,figure'},
-      {id:2,name:'Roronoa Zoro · King of Hell',series:'One Piece',price:420000,stock:12,rating:4.8,hue:150,figTag:'zoro,figure'},
-      {id:3,name:'Naruto Uzumaki · Sage Mode',series:'Naruto',price:365000,old:410000,stock:4,rating:4.7,badge:'Oferta',hue:30,figTag:'naruto,figure'},
-      {id:4,name:'Son Goku · Ultra Instinct',series:'Dragon Ball',price:540000,stock:9,rating:5.0,badge:'Nuevo',hue:205,figTag:'goku,figure'},
-      {id:5,name:'Tanjiro Kamado · Hinokami',series:'Demon Slayer',price:398000,old:450000,stock:7,rating:4.9,hue:150,figTag:'tanjiro,kimetsu'},
-      {id:6,name:'Gojo Satoru · Infinity',series:'Jujutsu Kaisen',price:610000,stock:3,rating:5.0,badge:'Preventa',hue:270,figTag:'gojo,figure'},
-      {id:7,name:'Nezuko Kamado · Demon Form',series:'Demon Slayer',price:372000,stock:15,rating:4.8,badge:'Nuevo',hue:345,figTag:'nezuko,kimetsu'},
-      {id:8,name:'Denji · Chainsaw Devil',series:'Chainsaw Man',price:355000,old:399000,stock:8,rating:4.6,hue:18,figTag:'chainsawman,anime'},
-      {id:9,name:'Levi Ackerman · Survey Corps',series:'Attack on Titan',price:430000,stock:5,rating:4.9,hue:95,figTag:'levi,figure'},
-      {id:10,name:'Pikachu · Nendoroid',series:'Pokémon',price:215000,stock:20,rating:4.7,badge:'Nuevo',hue:50,figTag:'pikachu,figure'},
-      {id:11,name:'Ichigo Kurosaki · Bankai',series:'Bleach',price:388000,old:440000,stock:6,rating:4.8,hue:205,figTag:'ichigo,figure'},
-      {id:12,name:'Vegeta · Royal Blue',series:'Dragon Ball',price:505000,stock:4,rating:4.9,badge:'Preventa',hue:225,figTag:'vegeta,figure'}
+      {id:1,name:'Monkey D. Luffy · Gear 5',series:'One Piece',price:485000,old:560000,stock:6,rating:4.9,badge:'Preventa',hue:345,char:'https://cdn.myanimelist.net/images/characters/9/310307.jpg'},
+      {id:2,name:'Roronoa Zoro · King of Hell',series:'One Piece',price:420000,stock:12,rating:4.8,hue:150,char:'https://cdn.myanimelist.net/images/characters/3/100534.jpg'},
+      {id:3,name:'Naruto Uzumaki · Sage Mode',series:'Naruto',price:365000,old:410000,stock:4,rating:4.7,badge:'Oferta',hue:30,char:'https://cdn.myanimelist.net/images/characters/2/284121.jpg'},
+      {id:4,name:'Son Goku · Ultra Instinct',series:'Dragon Ball',price:540000,stock:9,rating:5.0,badge:'Nuevo',hue:205,char:'https://cdn.myanimelist.net/images/characters/16/618693.jpg'},
+      {id:5,name:'Tanjiro Kamado · Hinokami',series:'Demon Slayer',price:398000,old:450000,stock:7,rating:4.9,hue:150,char:'https://cdn.myanimelist.net/images/characters/6/386735.jpg'},
+      {id:6,name:'Gojo Satoru · Infinity',series:'Jujutsu Kaisen',price:610000,stock:3,rating:5.0,badge:'Preventa',hue:270,char:'https://cdn.myanimelist.net/images/characters/15/422168.jpg'},
+      {id:7,name:'Nezuko Kamado · Demon Form',series:'Demon Slayer',price:372000,stock:15,rating:4.8,badge:'Nuevo',hue:345,char:'https://cdn.myanimelist.net/images/characters/2/378254.jpg'},
+      {id:8,name:'Denji · Chainsaw Devil',series:'Chainsaw Man',price:355000,old:399000,stock:8,rating:4.6,hue:18,char:'https://cdn.myanimelist.net/images/characters/3/492407.jpg'},
+      {id:9,name:'Levi Ackerman · Survey Corps',series:'Attack on Titan',price:430000,stock:5,rating:4.9,hue:95,char:'https://cdn.myanimelist.net/images/characters/2/241413.jpg'},
+      {id:10,name:'Pikachu · Nendoroid',series:'Pokémon',price:215000,stock:20,rating:4.7,badge:'Nuevo',hue:50,char:'https://cdn.myanimelist.net/images/characters/10/289627.jpg'},
+      {id:11,name:'Ichigo Kurosaki · Bankai',series:'Bleach',price:388000,old:440000,stock:6,rating:4.8,hue:205,char:'https://cdn.myanimelist.net/images/characters/3/512788.jpg'},
+      {id:12,name:'Vegeta · Royal Blue',series:'Dragon Ball',price:505000,stock:4,rating:4.9,badge:'Preventa',hue:225,char:'https://cdn.myanimelist.net/images/characters/14/86185.jpg'}
     ];
   }
 
@@ -533,8 +533,8 @@ class Component extends DCLogic {
       discount: p.old ? Math.round((1 - p.price/p.old)*100) : null,
       ratingStr: p.rating.toFixed(1),
       bg: this.bg(p.hue),
-      img: this.jp(p.figTag || this.tagFor(p.series), p.id*61+7, 700, 850),
-      imgL: this.jp(p.figTag || this.tagFor(p.series), p.id*61+7, 900, 1100),
+      img: p.char || this.jp(this.tagFor(p.series), p.id*61+7, 700, 850),
+      imgL: p.char || this.jp(this.tagFor(p.series), p.id*61+7, 900, 1100),
       imgFallback: this.jp(this.tagFor(p.series), p.id*61+7, 900, 1100),
       cap: 'FIGURA · ' + p.series.toUpperCase(),
       heartFill: faved ? 'var(--pink)' : 'none',
@@ -621,8 +621,10 @@ class Component extends DCLogic {
     const gbase = prod.id*61+7;
     const gseeds = [gbase, gbase+500, gbase+900, gbase+1300];
     const prodTag = this.tagFor(prod.series);
-    const figTag = prod.figTag || prodTag;
-    const gallery = gseeds.map((sd,i)=>({ img:this.jp(figTag,sd,900,1100), thumb:this.jp(figTag,sd,300,300), fallback:this.jp(prodTag,sd,900,1100), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) }));
+    const gallery = gseeds.map((sd,i)=>{
+      const useChar = i===0 && prod.char;
+      return { img: useChar ? prod.char : this.jp(prodTag,sd,900,1100), thumb: useChar ? prod.char : this.jp(prodTag,sd,300,300), fallback:this.jp(prodTag,sd,900,1100), ring: i===this.state.gallery ? 'var(--pink)' : 'transparent', onClick:()=>this.setState({gallery:i}) };
+    });
     const mainImg = gallery[this.state.gallery] ? gallery[this.state.gallery].img : prod.imgL;
     const mainImgFallback = gallery[this.state.gallery] ? gallery[this.state.gallery].fallback : prod.imgFallback;
     const related = products.filter(p => p.id !== prod.id).slice(0,4);
